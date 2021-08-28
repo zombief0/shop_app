@@ -11,6 +11,21 @@ class CartItem {
       @required this.quantity,
       @required this.price,
       @required this.title});
+
+  Map toJson() => {
+        'id': id,
+        'quantity': quantity,
+        'price': price,
+        'title': title,
+      };
+
+  factory CartItem.fromJson(dynamic json) {
+    return CartItem(
+        id: json['id'] as String,
+        quantity: json['quantity'] as int,
+        price: json['price'] as double,
+        title: json['title'] as String);
+  }
 }
 
 class Cart with ChangeNotifier {
@@ -62,6 +77,10 @@ class Cart with ChangeNotifier {
   void clear() {
     _items = {};
     notifyListeners();
+  }
+
+  bool isEmpty() {
+    return _items.isEmpty;
   }
 
   void removeSingleItem(String productId) {
